@@ -13,42 +13,49 @@ let currencyRatio = {
     USD: 1,
     VND: 22972,
     unit: "달러",
+    country: "미국 ",
   },
   KRW: {
     KRW: 1,
     USD: 0.00084,
     VND: 19.4,
     unit: "원",
+    country: "대한민국 ",
   },
   VND: {
     KRW: 0.052,
     USD: 0.000044,
     VND: 1,
     unit: "동",
+    country: "베트남 ",
   },
 };
-
 
 let fromBtn = document.getElementById("from-btn");
 let toBtn = document.getElementById("to-btn");
 let fromInput = document.getElementById("from-input");
 let toInput = document.getElementById("to-input");
 let fromCurrency = "USD";
-let toCurrency = "USD";
+let toCurrency = "KRW";
 
 // from메뉴버튼 단위변경
+fromBtn.innerHTML = `<img class="flag-img" src="${fromCurrency}.png"/>${currencyRatio[fromCurrency].country}${fromCurrency}`;
+
 document.querySelectorAll("#from-currency-list a").forEach((menu) =>
   menu.addEventListener("click", function () {
-    fromBtn.innerHTML = this.innerHTML;
     fromCurrency = this.innerHTML;
+    fromBtn.innerHTML = `<img class="flag-img" src="${fromCurrency}.png"/>${currencyRatio[fromCurrency].country}${fromCurrency}`;
     convert();
   })
 );
 // to메뉴버튼 단위변경
+toBtn.innerHTML = `<img class="flag-img" src="${toCurrency}.png"/>${currencyRatio[toCurrency].country}${toCurrency}`;
+
 document.querySelectorAll("#to-currency-list a").forEach((item) =>
   item.addEventListener("click", function () {
-    toBtn.textContent = this.textContent;
     toCurrency = this.textContent;
+    toBtn.textContent = this.textContent;
+    toBtn.innerHTML = `<img class="flag-img" src="${toCurrency}.png"/>${currencyRatio[toCurrency].country}${toCurrency}`;
     convert();
   })
 );
@@ -75,7 +82,9 @@ function reverseConvert() {
 const fromInputArea = document.getElementById("from-input-area");
 const toInputArea = document.getElementById("to-input-area");
 fromInput.addEventListener("focus", () => fromInputArea.classList.add("focus"));
-fromInput.addEventListener("blur", () => fromInputArea.classList.remove("focus"));
+fromInput.addEventListener("blur", () =>
+  fromInputArea.classList.remove("focus")
+);
 toInput.addEventListener("focus", () => toInputArea.classList.add("focus"));
 toInput.addEventListener("blur", () => toInputArea.classList.remove("focus"));
 

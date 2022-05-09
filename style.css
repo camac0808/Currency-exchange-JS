@@ -1,9 +1,7 @@
-
-
 .dropBtn {
   background-color: #3498db;
   color: #fff;
-  padding: 16px;
+  height: 40px;
   font-size: 16px;
   border: none;
   cursor: pointer;
@@ -47,22 +45,22 @@
 
 .container {
   border: 1px solid black;
-  width: 400px;
-  margin: 0 auto;
+  width: 300px;
+  margin: 20px auto;
 }
 
-#from-input-area, #to-input-area {
+#from-input-area,
+#to-input-area {
   width: 100%;
   text-align: right;
   box-sizing: border-box;
 }
 
 .input-area input {
-  width: 390px;
+  width: 100%;
   text-align: right;
   border: none;
   outline: none;
-  margin-right: 5px;
   box-sizing: border-box;
 }
 
@@ -73,4 +71,8 @@
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
+}
+
+.flag-img {
+  vertical-align: middle;
 }
