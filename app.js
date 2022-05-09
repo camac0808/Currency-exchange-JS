@@ -28,15 +28,15 @@ let currencyRatio = {
   },
 };
 
-var unitWords = ["", "만", "억", "조"];
-var splitUnit = 10000;
+
 let fromBtn = document.getElementById("from-btn");
 let toBtn = document.getElementById("to-btn");
 let fromInput = document.getElementById("from-input");
 let toInput = document.getElementById("to-input");
 let fromCurrency = "USD";
 let toCurrency = "USD";
-// 메뉴버튼 단위변경
+
+// from메뉴버튼 단위변경
 document.querySelectorAll("#from-currency-list a").forEach((menu) =>
   menu.addEventListener("click", function () {
     fromBtn.innerHTML = this.innerHTML;
@@ -44,7 +44,7 @@ document.querySelectorAll("#from-currency-list a").forEach((menu) =>
     convert();
   })
 );
-
+// to메뉴버튼 단위변경
 document.querySelectorAll("#to-currency-list a").forEach((item) =>
   item.addEventListener("click", function () {
     toBtn.textContent = this.textContent;
@@ -52,41 +52,59 @@ document.querySelectorAll("#to-currency-list a").forEach((item) =>
     convert();
   })
 );
-
+// from에서 to로 변환
 function convert() {
   let amount = fromInput.value;
-  let convertedAmount = amount * currencyRatio[fromCurrency][toCurrency];
-  let fromAmount = document.getElementById("fromAmount");
   let toAmount = document.getElementById("toAmount");
+  let convertedAmount = amount * currencyRatio[fromCurrency][toCurrency];
   toInput.value = convertedAmount.toFixed(2);
   toAmount.innerHTML = convertedAmount.toFixed(2);
-  if (fromCurrency === "USD") {
-    fromAmount.innerHTML = `${amount}달러`;
-  } else if (fromCurrency === "KRW") {
-    fromAmount.innerHTML = `${amount}원`;
-  } else if (fromCurrency === "VND") {
-    fromAmount.innerHTML = `${amount}동`;
-  }
+  renderNumber(amount, convertedAmount);
 }
-
+// to에서 from 변환
 function reverseConvert() {
   let amount = toInput.value;
+  let fromAmount = document.getElementById("fromAmount");
   let convertedAmount = amount * currencyRatio[toCurrency][fromCurrency];
   fromInput.value = convertedAmount.toFixed(2);
   fromAmount.innerHTML = convertedAmount.toFixed(2);
-  if (toCurrency === "USD") {
-    toAmount.innerHTML = `${amount}달러`;
-  } else if (toCurrency === "KRW") {
-    toAmount.innerHTML = `${amount}원`;
-  } else if (toCurrency === "VND") {
-    toAmount.innerHTML = `${amount}동`;
-  }
+  renderNumber(amount, convertedAmount);
 }
 
-// 클릭시 focus테두리 
+// 클릭시 focus테두리
 const fromInputArea = document.getElementById("from-input-area");
 const toInputArea = document.getElementById("to-input-area");
 fromInput.addEventListener("focus", () => fromInputArea.classList.add("focus"));
 fromInput.addEventListener("blur", () => fromInputArea.classList.remove("focus"));
 toInput.addEventListener("focus", () => toInputArea.classList.add("focus"));
 toInput.addEventListener("blur", () => toInputArea.classList.remove("focus"));
+
+//단위 별로 출력하기
+var unitWords = ["", "만", "억", "조"];
+var splitUnit = 10000;
+
+function readNum(num) {
+  let resultString = "";
+  let resultArray = [];
+  for (let i = 0; i < unitWords.length; i++) {
+    let unitResult =
+      (num % Math.pow(splitUnit, i + 1)) / Math.pow(splitUnit, i);
+    unitResult = Math.floor(unitResult);
+    if (unitResult > 0) {
+      resultArray[i] = unitResult;
+    }
+  }
+  for (let i = 0; i < resultArray.length; i++) {
+    if (!resultArray[i]) continue;
+    resultString = String(resultArray[i]) + unitWords[i] + resultString;
+  }
+  return resultString;
+}
+
+// 단위 출력 랜더링
+function renderNumber(from, to) {
+  document.getElementById("fromAmount").innerHTML =
+    readNum(from) + currencyRatio[fromCurrency].unit;
+  document.getElementById("toAmount").innerHTML =
+    readNum(to) + currencyRatio[toCurrency].unit;
+}
