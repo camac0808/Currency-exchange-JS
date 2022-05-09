@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Currency</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="dropdown">
+        <button class="dropBtn" id="from-btn">USD</button>
+        <div class="dropdown-content" id="from-currency-list">
+          <a href="#">USD</a>
+          <a href="#">KRW</a>
+          <a href="#">VND</a>
+        </div>
+      </div>
+      <div class="input-area" id="from-input-area">
+        <input type="number" id="from-input" onkeyup="convert()"/>
+        <div id="fromAmount">달러</div>
+      </div>
+    </div>
+
+    <h1 style="text-align: center">=</h1>
+
+    <div class="container">
+      <div class="dropdown">
+        <button class="dropBtn" id="to-btn">USD</button>
+        <div class="dropdown-content" id="to-currency-list">
+          <a href="#">USD</a>
+          <a href="#">KRW</a>
+          <a href="#">VND</a>
+        </div>
+      </div>
+      <div class="input-area" id="to-input-area">
+        <input type="number" id="to-input" onkeyup="reverseConvert()"/>
+        <div id="toAmount">달러</div>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
